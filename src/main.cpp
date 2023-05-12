@@ -8,6 +8,8 @@
 #include "../lib/hal_stm_lvgl/touchpad/touchpad.h"
 #include "../lib/hal_stm_lvgl/tft/tft.h"
 
+#include "ui_files/ui.h"
+
 #define LVGL_TICK 10     // Time tick value for lvgl in ms (1-10msa)
 #define TICKER_TIME 10ms // modified to miliseconds
 
@@ -49,7 +51,9 @@ int main()
 #ifdef LV_DEMOS_H
     printf("Demo\n");
     lv_demo_widgets();
-#else
+#endif
+#ifdef TEST_LV
+
     printf("Hello world\n");
     lv_obj_t *label1 = lv_label_create(lv_scr_act());
     lv_label_set_long_mode(label1, LV_LABEL_LONG_WRAP); /*Break the long lines*/
@@ -76,6 +80,10 @@ int main()
     lv_obj_add_flag(btn2, LV_OBJ_FLAG_CHECKABLE);
     label = lv_label_create(btn2);
     lv_label_set_text(label, "Toggled");
+#else
+    printf("UI\n");
+    ui_init();
+
 #endif
 
     while (true)
