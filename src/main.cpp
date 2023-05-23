@@ -8,6 +8,7 @@ CANService canService(PB_8, PB_9);
 // Displays
 HardwareDisplay display(COMPONENT_DISPLAY_MAIN);
 
+
 // Called once at bootup
 int main()
 {

@@ -8,54 +8,185 @@
 
 ///////////////////// VARIABLES ////////////////////
 
-// SCREEN: ui_Screen1
-void ui_Screen1_screen_init(void);
-void ui_event_Screen1(lv_event_t *e);
-lv_obj_t *ui_Screen1;
-lv_obj_t *ui_logoImage;
+// SCREEN: ui_LockScreen
+void ui_LockScreen_screen_init(void);
+void ui_event_LockScreen(lv_event_t * e);
+lv_obj_t * ui_LockScreen;
+lv_obj_t * ui_logoImage;
 
-// SCREEN: ui_Screen2
-void ui_Screen2_screen_init(void);
-lv_obj_t *ui_Screen2;
-lv_obj_t *ui_Label1;
-lv_obj_t *ui_Bar1;
-lv_obj_t *ui_Label2;
-lv_obj_t *ui_Bar2;
-lv_obj_t *ui_Label3;
-lv_obj_t *ui_Bar3;
-lv_obj_t *ui_Label4;
-lv_obj_t *ui_Bar4;
-lv_obj_t *ui_Arc1;
-lv_obj_t *ui_Arc2;
-lv_obj_t *ui_Label6;
-lv_obj_t *ui_Label5;
-lv_obj_t *ui_Panel2;
-lv_obj_t *ui_Label8;
-lv_obj_t *ui_Panel1;
-lv_obj_t *ui_Label7;
-lv_obj_t *ui_Bar6;
-lv_obj_t *ui_Bar5;
-lv_obj_t *ui____initial_actions0;
+// SCREEN: ui_HomeScreen
+void ui_HomeScreen_screen_init(void);
+void ui_event_HomeScreen(lv_event_t * e);
+lv_obj_t * ui_HomeScreen;
+lv_obj_t * ui_BatteryPercentLabel;
+lv_obj_t * ui_BatteryPercentBar;
+lv_obj_t * ui_BatteryTempLabel;
+lv_obj_t * ui_BatteryTempBar;
+lv_obj_t * ui_PowerArc;
+lv_obj_t * ui_RecuArc;
+lv_obj_t * ui_BatteryArc;
+lv_obj_t * ui_SpeedLabel;
+lv_obj_t * ui_kmhLabel;
+lv_obj_t * ui_StatePanel;
+lv_obj_t * ui_StateLabel;
+lv_obj_t * ui_ShutdownPanel;
+lv_obj_t * ui_ShutdownLabel;
+lv_obj_t * ui_BrakeBar;
+lv_obj_t * ui_GasBar;
+void ui_event_Button1(lv_event_t * e);
+lv_obj_t * ui_Button1;
+lv_obj_t * ui_PowermodeLabel;
+
+// SCREEN: ui_BatteryScreen
+void ui_BatteryScreen_screen_init(void);
+void ui_event_BatteryScreen(lv_event_t * e);
+lv_obj_t * ui_BatteryScreen;
+lv_obj_t * ui_CellVoltagePanel;
+lv_obj_t * ui_MaxCellVoltageLabel;
+lv_obj_t * ui_MinCellTempPanel;
+lv_obj_t * ui_MaxCellTempLabel;
+lv_obj_t * ui_MaxCellLabel;
+lv_obj_t * ui_MaxCellVoltagePanel;
+lv_obj_t * ui_MinCellVoltageLabel;
+lv_obj_t * ui_MaxCellTempPanel;
+lv_obj_t * ui_MinCellTempLabel;
+lv_obj_t * ui_MinCellLabel;
+lv_obj_t * ui_BatteryPercentBar1;
+lv_obj_t * ui_BatteryVoltageLabel;
+lv_obj_t * ui_BatteryPercentLabel1;
+lv_obj_t * ui_BatteryVoltageBar;
+
+// SCREEN: ui_MotorScreen
+void ui_MotorScreen_screen_init(void);
+void ui_event_MotorScreen(lv_event_t * e);
+lv_obj_t * ui_MotorScreen;
+lv_obj_t * ui_MotorTempBar;
+lv_obj_t * ui_MotorTempLabel;
+lv_obj_t * ui_AirTempBar;
+lv_obj_t * ui_AirTempLabel;
+lv_obj_t * ui_kmhLabel1;
+lv_obj_t * ui_SpeedLabel1;
+lv_obj_t * ui_PowerArc1;
+lv_obj_t * ui_RecuArc1;
+lv_obj_t * ui_BatteryArc1;
+lv_obj_t * ui_PowermodeLabel1;
+
+// SCREEN: ui_DebugScreen
+void ui_DebugScreen_screen_init(void);
+void ui_event_DebugScreen(lv_event_t * e);
+lv_obj_t * ui_DebugScreen;
+lv_obj_t * ui_StatePanel1;
+lv_obj_t * ui_StateLabel1;
+lv_obj_t * ui_ShutdownPanel1;
+lv_obj_t * ui_ShutdownLabel1;
+lv_obj_t * ui____initial_actions0;
 
 ///////////////////// TEST LVGL SETTINGS ////////////////////
 #if LV_COLOR_DEPTH != 16
-#error "LV_COLOR_DEPTH should be 16bit to match SquareLine Studio's settings"
+    #error "LV_COLOR_DEPTH should be 16bit to match SquareLine Studio's settings"
 #endif
-#if LV_COLOR_16_SWAP != 0
-#error "LV_COLOR_16_SWAP should be 0 to match SquareLine Studio's settings"
+#if LV_COLOR_16_SWAP !=0
+    #error "LV_COLOR_16_SWAP should be 0 to match SquareLine Studio's settings"
 #endif
 
 ///////////////////// ANIMATIONS ////////////////////
 
 ///////////////////// FUNCTIONS ////////////////////
-void ui_event_Screen1(lv_event_t *e)
+void ui_event_LockScreen(lv_event_t * e)
 {
     lv_event_code_t event_code = lv_event_get_code(e);
-    lv_obj_t *target = lv_event_get_target(e);
-    if (event_code == LV_EVENT_GESTURE && lv_indev_get_gesture_dir(lv_indev_get_act()) == LV_DIR_LEFT)
-    {
+    lv_obj_t * target = lv_event_get_target(e);
+    if(event_code == LV_EVENT_GESTURE &&  lv_indev_get_gesture_dir(lv_indev_get_act()) == LV_DIR_TOP) {
         lv_indev_wait_release(lv_indev_get_act());
-        _ui_screen_change(ui_Screen2, LV_SCR_LOAD_ANIM_FADE_ON, 500, 0);
+        _ui_screen_change(ui_HomeScreen, LV_SCR_LOAD_ANIM_MOVE_TOP, 100, 0);
+    }
+}
+void ui_event_HomeScreen(lv_event_t * e)
+{
+    lv_event_code_t event_code = lv_event_get_code(e);
+    lv_obj_t * target = lv_event_get_target(e);
+    if(event_code == LV_EVENT_GESTURE &&  lv_indev_get_gesture_dir(lv_indev_get_act()) == LV_DIR_LEFT) {
+        lv_indev_wait_release(lv_indev_get_act());
+        _ui_screen_change(ui_BatteryScreen, LV_SCR_LOAD_ANIM_MOVE_LEFT, 100, 0);
+    }
+    if(event_code == LV_EVENT_GESTURE &&  lv_indev_get_gesture_dir(lv_indev_get_act()) == LV_DIR_BOTTOM) {
+        lv_indev_wait_release(lv_indev_get_act());
+        _ui_screen_change(ui_LockScreen, LV_SCR_LOAD_ANIM_MOVE_BOTTOM, 100, 0);
+    }
+    if(event_code == LV_EVENT_GESTURE &&  lv_indev_get_gesture_dir(lv_indev_get_act()) == LV_DIR_RIGHT) {
+        lv_indev_wait_release(lv_indev_get_act());
+        _ui_screen_change(ui_DebugScreen, LV_SCR_LOAD_ANIM_MOVE_RIGHT, 100, 0);
+    }
+}
+void ui_event_Button1(lv_event_t * e)
+{
+    lv_event_code_t event_code = lv_event_get_code(e);
+    lv_obj_t * target = lv_event_get_target(e);
+    if(event_code == LV_EVENT_CLICKED) {
+        changePowerMode(e);
+    }
+}
+void ui_event_BatteryScreen(lv_event_t * e)
+{
+    lv_event_code_t event_code = lv_event_get_code(e);
+    lv_obj_t * target = lv_event_get_target(e);
+    if(event_code == LV_EVENT_GESTURE &&  lv_indev_get_gesture_dir(lv_indev_get_act()) == LV_DIR_BOTTOM) {
+        lv_indev_wait_release(lv_indev_get_act());
+        _ui_screen_change(ui_LockScreen, LV_SCR_LOAD_ANIM_MOVE_BOTTOM, 100, 0);
+    }
+    if(event_code == LV_EVENT_GESTURE &&  lv_indev_get_gesture_dir(lv_indev_get_act()) == LV_DIR_RIGHT) {
+        lv_indev_wait_release(lv_indev_get_act());
+        _ui_screen_change(ui_HomeScreen, LV_SCR_LOAD_ANIM_MOVE_RIGHT, 100, 0);
+    }
+    if(event_code == LV_EVENT_GESTURE &&  lv_indev_get_gesture_dir(lv_indev_get_act()) == LV_DIR_LEFT) {
+        lv_indev_wait_release(lv_indev_get_act());
+        _ui_screen_change(ui_MotorScreen, LV_SCR_LOAD_ANIM_MOVE_LEFT, 100, 0);
+    }
+    if(event_code == LV_EVENT_GESTURE &&  lv_indev_get_gesture_dir(lv_indev_get_act()) == LV_DIR_TOP) {
+        lv_indev_wait_release(lv_indev_get_act());
+        _ui_screen_change(ui_HomeScreen, LV_SCR_LOAD_ANIM_MOVE_TOP, 100, 0);
+    }
+}
+void ui_event_MotorScreen(lv_event_t * e)
+{
+    lv_event_code_t event_code = lv_event_get_code(e);
+    lv_obj_t * target = lv_event_get_target(e);
+    if(event_code == LV_EVENT_GESTURE &&  lv_indev_get_gesture_dir(lv_indev_get_act()) == LV_DIR_LEFT) {
+        lv_indev_wait_release(lv_indev_get_act());
+        _ui_screen_change(ui_DebugScreen, LV_SCR_LOAD_ANIM_MOVE_LEFT, 100, 0);
+    }
+    if(event_code == LV_EVENT_GESTURE &&  lv_indev_get_gesture_dir(lv_indev_get_act()) == LV_DIR_RIGHT) {
+        lv_indev_wait_release(lv_indev_get_act());
+        _ui_screen_change(ui_BatteryScreen, LV_SCR_LOAD_ANIM_MOVE_RIGHT, 100, 0);
+    }
+    if(event_code == LV_EVENT_GESTURE &&  lv_indev_get_gesture_dir(lv_indev_get_act()) == LV_DIR_BOTTOM) {
+        lv_indev_wait_release(lv_indev_get_act());
+        _ui_screen_change(ui_LockScreen, LV_SCR_LOAD_ANIM_MOVE_BOTTOM, 100, 0);
+    }
+    if(event_code == LV_EVENT_GESTURE &&  lv_indev_get_gesture_dir(lv_indev_get_act()) == LV_DIR_TOP) {
+        lv_indev_wait_release(lv_indev_get_act());
+        _ui_screen_change(ui_HomeScreen, LV_SCR_LOAD_ANIM_MOVE_TOP, 100, 0);
+    }
+}
+void ui_event_DebugScreen(lv_event_t * e)
+{
+    lv_event_code_t event_code = lv_event_get_code(e);
+    lv_obj_t * target = lv_event_get_target(e);
+    if(event_code == LV_EVENT_GESTURE &&  lv_indev_get_gesture_dir(lv_indev_get_act()) == LV_DIR_BOTTOM) {
+        lv_indev_wait_release(lv_indev_get_act());
+        _ui_screen_change(ui_LockScreen, LV_SCR_LOAD_ANIM_MOVE_BOTTOM, 100, 0);
+    }
+    if(event_code == LV_EVENT_GESTURE &&  lv_indev_get_gesture_dir(lv_indev_get_act()) == LV_DIR_LEFT) {
+        lv_indev_wait_release(lv_indev_get_act());
+        _ui_screen_change(ui_HomeScreen, LV_SCR_LOAD_ANIM_MOVE_LEFT, 100, 0);
+    }
+    if(event_code == LV_EVENT_GESTURE &&  lv_indev_get_gesture_dir(lv_indev_get_act()) == LV_DIR_RIGHT) {
+        lv_indev_wait_release(lv_indev_get_act());
+        _ui_screen_change(ui_MotorScreen, LV_SCR_LOAD_ANIM_MOVE_RIGHT, 100, 0);
+    }
+    if(event_code == LV_EVENT_GESTURE &&  lv_indev_get_gesture_dir(lv_indev_get_act()) == LV_DIR_TOP) {
+        lv_indev_wait_release(lv_indev_get_act());
+        _ui_screen_change(ui_HomeScreen, LV_SCR_LOAD_ANIM_MOVE_TOP, 100, 0);
     }
 }
 
@@ -63,12 +194,15 @@ void ui_event_Screen1(lv_event_t *e)
 
 void ui_init(void)
 {
-    lv_disp_t *dispp = lv_disp_get_default();
-    lv_theme_t *theme = lv_theme_default_init(dispp, lv_palette_main(LV_PALETTE_BLUE), lv_palette_main(LV_PALETTE_RED),
-                                              true, LV_FONT_DEFAULT);
+    lv_disp_t * dispp = lv_disp_get_default();
+    lv_theme_t * theme = lv_theme_default_init(dispp, lv_palette_main(LV_PALETTE_BLUE), lv_palette_main(LV_PALETTE_RED),
+                                               true, LV_FONT_DEFAULT);
     lv_disp_set_theme(dispp, theme);
-    ui_Screen1_screen_init();
-    ui_Screen2_screen_init();
+    ui_LockScreen_screen_init();
+    ui_HomeScreen_screen_init();
+    ui_BatteryScreen_screen_init();
+    ui_MotorScreen_screen_init();
+    ui_DebugScreen_screen_init();
     ui____initial_actions0 = lv_obj_create(NULL);
-    lv_disp_load_scr(ui_Screen1);
+    lv_disp_load_scr(ui_LockScreen);
 }

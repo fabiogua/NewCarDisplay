@@ -7,8 +7,7 @@
 #define _CARUI_UI_H
 
 #ifdef __cplusplus
-extern "C"
-{
+extern "C" {
 #endif
 
 #if defined __has_include
@@ -25,37 +24,78 @@ extern "C"
 
 #include "ui_helpers.h"
 #include "ui_events.h"
-    // SCREEN: ui_Screen1
-    void ui_Screen1_screen_init(void);
-    void ui_event_Screen1(lv_event_t *e);
-    extern lv_obj_t *ui_Screen1;
-    extern lv_obj_t *ui_logoImage;
-    // SCREEN: ui_Screen2
-    void ui_Screen2_screen_init(void);
-    extern lv_obj_t *ui_Screen2;
-    extern lv_obj_t *ui_Label1;
-    extern lv_obj_t *ui_Bar1;
-    extern lv_obj_t *ui_Label2;
-    extern lv_obj_t *ui_Bar2;
-    extern lv_obj_t *ui_Label3;
-    extern lv_obj_t *ui_Bar3;
-    extern lv_obj_t *ui_Label4;
-    extern lv_obj_t *ui_Bar4;
-    extern lv_obj_t *ui_Arc1;
-    extern lv_obj_t *ui_Arc2;
-    extern lv_obj_t *ui_Label6;
-    extern lv_obj_t *ui_Label5;
-    extern lv_obj_t *ui_Panel2;
-    extern lv_obj_t *ui_Label8;
-    extern lv_obj_t *ui_Panel1;
-    extern lv_obj_t *ui_Label7;
-    extern lv_obj_t *ui_Bar6;
-    extern lv_obj_t *ui_Bar5;
-    extern lv_obj_t *ui____initial_actions0;
+// SCREEN: ui_LockScreen
+void ui_LockScreen_screen_init(void);
+void ui_event_LockScreen(lv_event_t * e);
+extern lv_obj_t * ui_LockScreen;
+extern lv_obj_t * ui_logoImage;
+// SCREEN: ui_HomeScreen
+void ui_HomeScreen_screen_init(void);
+void ui_event_HomeScreen(lv_event_t * e);
+extern lv_obj_t * ui_HomeScreen;
+extern lv_obj_t * ui_BatteryPercentLabel;
+extern lv_obj_t * ui_BatteryPercentBar;
+extern lv_obj_t * ui_BatteryTempLabel;
+extern lv_obj_t * ui_BatteryTempBar;
+extern lv_obj_t * ui_PowerArc;
+extern lv_obj_t * ui_RecuArc;
+extern lv_obj_t * ui_BatteryArc;
+extern lv_obj_t * ui_SpeedLabel;
+extern lv_obj_t * ui_kmhLabel;
+extern lv_obj_t * ui_StatePanel;
+extern lv_obj_t * ui_StateLabel;
+extern lv_obj_t * ui_ShutdownPanel;
+extern lv_obj_t * ui_ShutdownLabel;
+extern lv_obj_t * ui_BrakeBar;
+extern lv_obj_t * ui_GasBar;
+void ui_event_Button1(lv_event_t * e);
+extern lv_obj_t * ui_Button1;
+extern lv_obj_t * ui_PowermodeLabel;
+// SCREEN: ui_BatteryScreen
+void ui_BatteryScreen_screen_init(void);
+void ui_event_BatteryScreen(lv_event_t * e);
+extern lv_obj_t * ui_BatteryScreen;
+extern lv_obj_t * ui_CellVoltagePanel;
+extern lv_obj_t * ui_MaxCellVoltageLabel;
+extern lv_obj_t * ui_MinCellTempPanel;
+extern lv_obj_t * ui_MaxCellTempLabel;
+extern lv_obj_t * ui_MaxCellLabel;
+extern lv_obj_t * ui_MaxCellVoltagePanel;
+extern lv_obj_t * ui_MinCellVoltageLabel;
+extern lv_obj_t * ui_MaxCellTempPanel;
+extern lv_obj_t * ui_MinCellTempLabel;
+extern lv_obj_t * ui_MinCellLabel;
+extern lv_obj_t * ui_BatteryPercentBar1;
+extern lv_obj_t * ui_BatteryVoltageLabel;
+extern lv_obj_t * ui_BatteryPercentLabel1;
+extern lv_obj_t * ui_BatteryVoltageBar;
+// SCREEN: ui_MotorScreen
+void ui_MotorScreen_screen_init(void);
+void ui_event_MotorScreen(lv_event_t * e);
+extern lv_obj_t * ui_MotorScreen;
+extern lv_obj_t * ui_MotorTempBar;
+extern lv_obj_t * ui_MotorTempLabel;
+extern lv_obj_t * ui_AirTempBar;
+extern lv_obj_t * ui_AirTempLabel;
+extern lv_obj_t * ui_kmhLabel1;
+extern lv_obj_t * ui_SpeedLabel1;
+extern lv_obj_t * ui_PowerArc1;
+extern lv_obj_t * ui_RecuArc1;
+extern lv_obj_t * ui_BatteryArc1;
+extern lv_obj_t * ui_PowermodeLabel1;
+// SCREEN: ui_DebugScreen
+void ui_DebugScreen_screen_init(void);
+void ui_event_DebugScreen(lv_event_t * e);
+extern lv_obj_t * ui_DebugScreen;
+extern lv_obj_t * ui_StatePanel1;
+extern lv_obj_t * ui_StateLabel1;
+extern lv_obj_t * ui_ShutdownPanel1;
+extern lv_obj_t * ui_ShutdownLabel1;
+extern lv_obj_t * ui____initial_actions0;
 
-    LV_IMG_DECLARE(ui_img_logo_png); // assets\logo.png
+LV_IMG_DECLARE(ui_img_logo_png);    // assets\logo.png
 
-    void ui_init(void);
+void ui_init(void);
 
 #ifdef __cplusplus
 } /*extern "C"*/
