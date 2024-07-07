@@ -89,7 +89,7 @@ public:
                 while ((msgSendResult != 1) && (timeout < CAN_TIMEOUT))
                 {
                     msgSendResult = _can.write(canMessage);
-                    wait(0.00000124);
+                    wait_ns(1);
                 }
             }
 
@@ -368,7 +368,7 @@ private:
             }
             else
             {
-                wait(0.000001);
+                wait_ns(1);
             }
         }
     }
