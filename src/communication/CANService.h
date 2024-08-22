@@ -41,7 +41,7 @@ public:
         component_exist_t componentExist = _registeredAddresses[id];
 
 #ifdef CAN_DEBUG
-        pcSerial.printf("[CANService]@sendMessage: Try to send Message for ComponentID: 0x%x\n", id);
+        printf("[CANService]@sendMessage: Try to send Message for ComponentID: 0x%x\n", id);
 #endif
 
         if (componentExist.exists)
@@ -56,11 +56,11 @@ public:
 #ifdef CAN_DEBUG
             if (msgBuildResult == MESSAGE_BUILD_OK)
             {
-                pcSerial.printf("[CANService]@sendMessage: Component 0x%x Message Build success\n", id);
+                printf("[CANService]@sendMessage: Component 0x%x Message Build success\n", id);
             }
             else
             {
-                pcSerial.printf("[CANService]@sendMessage: Component 0x%x Message Build error\n", id);
+                printf("[CANService]@sendMessage: Component 0x%x Message Build error\n", id);
             }
 #endif
 
@@ -94,7 +94,7 @@ public:
             }
 
 #ifdef CAN_DEBUG
-            pcSerial.printf("[CANService]@sendMessage: Message for Component 0x%x write result: %i (1 == Succes, 0 == Failed)\n", id, msgSendResult);
+            printf("[CANService]@sendMessage: Message for Component 0x%x write result: %i (1 == Succes, 0 == Failed)\n", id, msgSendResult);
 #endif
 
             if (msgSendResult > 0)
@@ -105,7 +105,7 @@ public:
         else
         { // else do nothing (component not registered before -> can't send messages for it == obvious)
 #ifdef CAN_DEBUG
-            pcSerial.printf("[CANService]@sendMessage: Can't send Message for Component 0x%x -> component not registered before (componentExist.exists == false)\n", id);
+            printf("[CANService]@sendMessage: Can't send Message for Component 0x%x -> component not registered before (componentExist.exists == false)\n", id);
 #endif
         }
 
@@ -131,7 +131,7 @@ public:
     {
         bool success = true;
 #ifdef CAN_DEBUG
-        pcSerial.printf("[CANService]@processInbound: Processing Inbound. Telegrams in Buffer: %i\n", _telegramsIn.size());
+        printf("[CANService]@processInbound: Processing Inbound. Telegrams in Buffer: %i\n", _telegramsIn.size());
 #endif
 
         // Process received Telegrams saved in the _telegramsIn Buffer
@@ -144,7 +144,7 @@ public:
             id_component_t id = m.data[0];
 
 #ifdef CAN_DEBUG
-            pcSerial.printf("[CANService]@processInbound: Processing Message with ID: 0x%x\n", id);
+            printf("[CANService]@processInbound: Processing Message with ID: 0x%x\n", id);
 #endif
 
             component_exist_t componentExist = _registeredAddresses[id];
@@ -169,21 +169,21 @@ public:
                 if (msgParseResult == MESSAGE_PARSE_OK)
                 {
 #ifdef CAN_DEBUG
-                    pcSerial.printf("[CANService]@processInbound: Message with ID 0x%x parsed successfully\n", id);
+                    printf("[CANService]@processInbound: Message with ID 0x%x parsed successfully\n", id);
 #endif
                 }
                 else
                 {
                     success = false;
 #ifdef CAN_DEBUG
-                    pcSerial.printf("[CANService]@processInbound: Message with ID 0x%x parsing failed!\n", id);
+                    printf("[CANService]@processInbound: Message with ID 0x%x parsing failed!\n", id);
 #endif
                 }
             }
             else
             { // else do nothing (because it could just be a message for a component on another device)
 #ifdef CAN_DEBUG
-                pcSerial.printf("[CANService]@processInbound: Message not processed, component with ID 0x%x not registered before\n", id);
+                printf("[CANService]@processInbound: Message not processed, component with ID 0x%x not registered before\n", id);
 #endif
             }
         }
@@ -198,7 +198,7 @@ public:
         if (componentExist.exists)
         {
 #ifdef MESSAGE_REPORT
-            pcSerial.printf("[CANService]@addComponent: Component already added! ComponentID: 0x%x\n", id);
+            printf("[CANService]@addComponent: Component already added! ComponentID: 0x%x\n", id);
 #endif
         }
 
@@ -216,7 +216,7 @@ public:
         _components[id] = newComponent;
 
 #ifdef CAN_DEBUG
-        pcSerial.printf("[CANService]@addComponent: Component added. ComponentID: 0x%x\n", id);
+        printf("[CANService]@addComponent: Component added. ComponentID: 0x%x\n", id);
 #endif
     }
 
@@ -231,21 +231,21 @@ public:
                 _registeredAddresses[id].sendLoop = true;
                 _sendLoopComponents.push_back(id);
 #ifdef CAN_DEBUG
-                pcSerial.printf("[CANService]@addComponentToSendLoop: Component add to sendLoop. ComponentID: 0x%x\n", id);
+                printf("[CANService]@addComponentToSendLoop: Component add to sendLoop. ComponentID: 0x%x\n", id);
 #endif
                 return true;
             }
             else
             {
 #ifdef MESSAGE_REPORT
-                pcSerial.printf("[CANService]@addComponentToSendLoop: Component already added to sendLoop! ComponentID: 0x%x\n", id);
+                printf("[CANService]@addComponentToSendLoop: Component already added to sendLoop! ComponentID: 0x%x\n", id);
 #endif
             }
         }
         else
         {
 #ifdef MESSAGE_REPORT
-            pcSerial.printf("[CANService]@addComponentToSendLoop: Component not Registered before! ComponentID: 0x%x\n", id);
+            printf("[CANService]@addComponentToSendLoop: Component not Registered before! ComponentID: 0x%x\n", id);
 #endif
         }
 
@@ -257,7 +257,7 @@ public:
         bool success = true;
 
 #ifdef CAN_DEBUG
-        pcSerial.printf("[CANService]@processSendLoop: Processing sendLoop. SendLoop size: %i\n", _sendLoopComponents.size());
+        printf("[CANService]@processSendLoop: Processing sendLoop. SendLoop size: %i\n", _sendLoopComponents.size());
 #endif
 
         for (auto componentId : _sendLoopComponents)
@@ -268,14 +268,14 @@ public:
                 if (broadcastMessage(componentId))
                 {
 #ifdef CAN_DEBUG
-                    pcSerial.printf("[CANService]@processSendLoop: Component in sendLoop processed successfully. ComponentID: 0x%x\n", componentId);
+                    printf("[CANService]@processSendLoop: Component in sendLoop processed successfully. ComponentID: 0x%x\n", componentId);
 #endif
                 }
                 else
                 {
                     success = false;
 #ifdef CAN_DEBUG
-                    pcSerial.printf("[CANService]@processSendLoop: Component in sendLoop prcessing failed. ComponentID: 0x%x\n", componentId);
+                    printf("[CANService]@processSendLoop: Component in sendLoop prcessing failed. ComponentID: 0x%x\n", componentId);
 #endif
                 }
             }
@@ -283,7 +283,7 @@ public:
             {
                 success = false;
 #ifdef CAN_DEBUG
-                pcSerial.printf("[CANService]@processSendLoop: Unable to process component in sendLoop (componentExist.sendLoop == false). ComponentID: 0x%x\n", componentId);
+                printf("[CANService]@processSendLoop: Unable to process component in sendLoop (componentExist.sendLoop == false). ComponentID: 0x%x\n", componentId);
 #endif
             }
         }
@@ -299,16 +299,16 @@ public:
     virtual void run()
     {
 #ifdef CAN_DEBUG
-        pcSerial.printf("[CANService]@run: Start CANService run()\n");
+        printf("[CANService]@run: Start CANService run()\n");
         if (processInbound())
-            pcSerial.printf("[CANService]@run: Success processInbound() (returned true)\n");
+            printf("[CANService]@run: Success processInbound() (returned true)\n");
         else
-            pcSerial.printf("[CANService]@run: Failed processInbound() (returned false)\n");
+            printf("[CANService]@run: Failed processInbound() (returned false)\n");
 
         if (processSendLoop())
-            pcSerial.printf("[CANService]@run: Success processSendLoop() (returned true)\n");
+            printf("[CANService]@run: Success processSendLoop() (returned true)\n");
         else
-            pcSerial.printf("[CANService]@run: Failed processSendLoop() (returned false)\n");
+            printf("[CANService]@run: Failed processSendLoop() (returned false)\n");
 #else
         processInbound();
         processSendLoop();
@@ -319,7 +319,7 @@ public:
         if (tdError > 0 || rdError > 0)
         {
 #ifdef REPORT_CAN_ERROR
-            pcSerial.printf("[CANService]@run: Detected CAN Error: td: %i\t rd: %i\n", tdError, rdError);
+            printf("[CANService]@run: Detected CAN Error: td: %i\t rd: %i\n", tdError, rdError);
 #endif
 
             // Reset to recover from passive mode

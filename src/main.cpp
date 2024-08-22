@@ -14,10 +14,14 @@ int main()
     printf("Initializing CAN\n");
     canService.setSenderId(DEVICE_DISPLAY);
     canService.addComponent((ICommunication *)&display);
+    canService.addComponentToSendLoop((ICommunication *) &display);
+
+        wait_ns(1000);
+
     while (true)
     {
         canService.run();
         display.lv_task();
-        wait_ns(10000);
+        wait_ns(1000);
     }
 }

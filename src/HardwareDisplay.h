@@ -281,6 +281,12 @@ public:
 
     message_build_result_t buildMessage(CarMessage &carMessage)
     {
+        car_sub_message_t subMessage;
+        subMessage.length = 2;
+        subMessage.data[0] = 0;
+        subMessage.data[1] = 1;
+        carMessage.addSubMessage(subMessage);
+
         return MESSAGE_BUILD_OK;
     }
 
@@ -290,52 +296,56 @@ public:
         for (car_sub_message_t &subMessage : carMessage.subMessages)
         {
             if (subMessage.length != 7) // not a valid message
-                result = MESSAGE_PARSE_ERROR;
+                    result = MESSAGE_PARSE_ERROR;
 
             uint8_t msgId;
-            msgId = subMessage.data[0];
-            if (msgId == 0)
-            {
 
-                // subMessage.data[1] = (uint8_t)_status;
+            printf("Message received\n");
+            printf("Data: %d %d %d %d %d %d %d\n", subMessage.data[0], subMessage.data[1], subMessage.data[2], subMessage.data[3], subMessage.data[4], subMessage.data[5], subMessage.data[6]);
 
-                setShutdownError(subMessage.data[2]);
+            // msgId = subMessage.data[0];
+            // if (msgId == 0)
+            // {
 
-                uint16_t speed = (uint16_t)subMessage.data[3] | (subMessage.data[4] << 8);
-                setSpeed((float)speed / 100.0);
+            //     // subMessage.data[1] = (uint8_t)_status;
 
-                uint16_t current = (uint16_t)subMessage.data[5] | (subMessage.data[6] << 8);
-                setCurrent(current);
-            }
-            else if (msgId == 1)
-            {
+            //     setShutdownError(subMessage.data[2]);
 
-                uint16_t motorTemp = (uint16_t)subMessage.data[1] << 8 | subMessage.data[2];
-                setMotorTemperature((float)motorTemp / 100.0);
+            //     uint16_t speed = (uint16_t)subMessage.data[3] | (subMessage.data[4] << 8);
+            //     setSpeed((float)speed / 100.0);
 
-                uint16_t airTemp = (uint16_t)subMessage.data[3] << 8 | subMessage.data[4];
-                setAirTemperature((float)airTemp / 100.0);
+            //     uint16_t current = (uint16_t)subMessage.data[5] | (subMessage.data[6] << 8);
+            //     setCurrent(current);
+            // }
+            // else if (msgId == 1)
+            // {
 
-                uint16_t dcVoltage = (uint16_t)subMessage.data[5] << 8 | subMessage.data[6];
-                setBatteryVoltage((float)dcVoltage / 100.0);
-            }
-            else if (msgId == 2)
-            {
-                setCurrent(subMessage.data[1] << 8 | subMessage.data[2]);
-                setState(subMessage.data[3]);
-                setPowermode(subMessage.data[4]);
-                calcPower();
-            }
-            else if (msgId == 3)
-            {
-                uint16_t gas = (uint16_t)subMessage.data[1] | (subMessage.data[2] << 8);
-                setGas((float)gas / 65535.0);
+            //     uint16_t motorTemp = (uint16_t)subMessage.data[1] << 8 | subMessage.data[2];
+            //     setMotorTemperature((float)motorTemp / 100.0);
 
-                uint16_t brake = (uint16_t)subMessage.data[3] | (subMessage.data[4] << 8);
-                setBrake((float)brake / 65535.0);
-            }
-            else
-                result = MESSAGE_PARSE_ERROR;
+            //     uint16_t airTemp = (uint16_t)subMessage.data[3] << 8 | subMessage.data[4];
+            //     setAirTemperature((float)airTemp / 100.0);
+
+            //     uint16_t dcVoltage = (uint16_t)subMessage.data[5] << 8 | subMessage.data[6];
+            //     setBatteryVoltage((float)dcVoltage / 100.0);
+            // }
+            // else if (msgId == 2)
+            // {
+            //     setCurrent(subMessage.data[1] << 8 | subMessage.data[2]);
+            //     setState(subMessage.data[3]);
+            //     setPowermode(subMessage.data[4]);
+            //     calcPower();
+            // }
+            // else if (msgId == 3)
+            // {
+            //     uint16_t gas = (uint16_t)subMessage.data[1] | (subMessage.data[2] << 8);
+            //     setGas((float)gas / 65535.0);
+
+            //     uint16_t brake = (uint16_t)subMessage.data[3] | (subMessage.data[4] << 8);
+            //     setBrake((float)brake / 65535.0);
+            // }
+            // else
+            //     result = MESSAGE_PARSE_ERROR;
         }
 
         return result;
@@ -343,7 +353,7 @@ public:
 
     static void lv_ticker_func()
     {
-        lv_tick_inc(LVGL_TICK);
+        lv_tick_inc(LVGL_TICK); 
     }
 
     void setup()
